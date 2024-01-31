@@ -5,6 +5,7 @@ namespace App\Controller;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductsController extends AbstractController
@@ -23,7 +24,7 @@ class ProductsController extends AbstractController
 
     }
     #[Route('/products/{id}/lowest-price', name: 'lowest-price',methods: 'POST')]
-    public function lowestprice(int $id){
+    public function lowestprice(int $id):Response{
         dd($id);
 
     }
