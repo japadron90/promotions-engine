@@ -10,6 +10,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductsController extends AbstractController
 {
+    #[Route('/products/{id}/lowest-price', name: 'lowest-price',methods: 'POST')]
+    public function lowestPrice(int $id):Response{
+        dd($id);
+
+    }
+
+
     #[Route('/productos', name: 'app_products')]
     public function index(): JsonResponse
     {
@@ -23,9 +30,7 @@ class ProductsController extends AbstractController
     {
 
     }
-    #[Route('/products/{id}/lowest-price', name: 'lowest-price',methods: 'POST')]
-    public function lowestprice(int $id):Response{
-        dd($id);
 
-    }
+
+
 }
