@@ -12,16 +12,18 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Context\Normalizer\DateTimeNormalizerContextBuilder;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ProductsController extends AbstractController
 {
     #[Route('/products/{id}/lowest-price', name: 'lowest-price',methods: 'POST')]
-    public function lowestPrice(int $id,Request $request): Response{
+    public function lowestPrice(int $id,Request $request,SerializerInterface $serializer): Response{
 
         if($request->headers->has('force_fail')){
             return new JsonResponse(['error'=>'promotions Engine failure message'],$request->headers->get('force_fail'));
 
         }
+        dd($serializer);
         return new JsonResponse([
             'quantity'=>5,
             'request_location'=>'UK',
