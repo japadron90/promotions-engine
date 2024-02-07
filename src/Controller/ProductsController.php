@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DTO\LowestPriceEnquiry;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +24,8 @@ class ProductsController extends AbstractController
             return new JsonResponse(['error'=>'promotions Engine failure message'],$request->headers->get('force_fail'));
 
         }
-        dd($serializer);
+        $deserializer=$serializer->deserialize($request->getContent(),LowestPriceEnquiry::class,'json');
+       dd($deserializer);
         return new JsonResponse([
             'quantity'=>5,
             'request_location'=>'UK',
