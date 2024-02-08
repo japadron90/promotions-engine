@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\DTO\LowestPriceEnquiry;
+use App\Filter\PromotionFilterInterface;
 use App\Service\Serializer\DtoSerializer;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +20,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ProductsController extends AbstractController
 {
     #[Route('/products/{id}/lowest-price', name: 'lowest-price',methods: 'POST')]
-    public function lowestPrice(int $id,Request $request,DtoSerializer $serializer): Response{
+    public function lowestPrice(int $id,Request $request,DtoSerializer $serializer,PromotionFilterInterface $promotionFilter): Response{
 
         if($request->headers->has('force_fail')){
             return new JsonResponse(['error'=>'promotions Engine failure message'],$request->headers->get('force_fail'));
@@ -28,8 +29,8 @@ class ProductsController extends AbstractController
       /** @var   LowestPriceEnquiry $lowestPriceEnquiry */
         $lowestPriceEnquiry=$serializer->deserialize($request->getContent(),LowestPriceEnquiry::class,'json');
 
-
-        return new Response($serializer->serialize($lowestPriceEnquiry,'json'),200);
+$modify=$promotionFilter->apply($lowestPriceEnquiry);
+        return new Response($serializer->serialize($modify,'json'),200);
 
 
     }
