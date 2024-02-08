@@ -4,6 +4,7 @@ namespace App\Service\Serializer;
 
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -14,7 +15,9 @@ private SerializerInterface $serializer ;
 
     public function __construct()
     {
-        $this->serializer=new Serializer([new ObjectNormalizer()],[new JsonEncoder()]);
+        $encoders = [ new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer(nameConverter: new CamelCaseToSnakeCaseNameConverter())];
+        $this->serializer=new Serializer($normalizers,$encoders);
     }
 
 
