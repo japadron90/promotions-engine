@@ -31,7 +31,9 @@ class ProductsController extends AbstractController
         $lowestPriceEnquiry->setPromotionId(3);
         $lowestPriceEnquiry->setPromotionName('Black Friday half price sale');
 
-        return new JsonResponse($lowestPriceEnquiry,200);
+        return new Response($serializer->serialize($lowestPriceEnquiry,'json'),200);
+
+       // return new JsonResponse($lowestPriceEnquiry,200);
         
 
     }
