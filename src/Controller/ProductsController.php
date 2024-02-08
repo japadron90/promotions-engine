@@ -34,8 +34,6 @@ class ProductsController extends AbstractController
 
         return new Response($serializer->serialize($lowestPriceEnquiry,'json'),200);
 
-       // return new JsonResponse($lowestPriceEnquiry,200);
-        
 
     }
 
