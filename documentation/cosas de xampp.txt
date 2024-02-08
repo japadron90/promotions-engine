@@ -1,0 +1,5 @@
+1- En php.ini debe estar descomentariado
+extension=zip
+para poder descomprimir los paquetes de symfony cuando se descargan por cli
+2-Para Postgres debe estar descomentariado
+extension=pdo_pgsql y extension =pdo_sqllite
