@@ -30,7 +30,8 @@ class ProductsController extends AbstractController
         $lowestPriceEnquiry=$serializer->deserialize($request->getContent(),LowestPriceEnquiry::class,'json');
 
 $modify=$promotionFilter->apply($lowestPriceEnquiry);
-        return new Response($serializer->serialize($modify,'json'),200);
+$responseContent=$serializer->serialize($modify,'json');
+        return new Response($responseContent,200);
 
 
     }
