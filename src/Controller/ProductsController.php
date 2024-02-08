@@ -27,10 +27,7 @@ class ProductsController extends AbstractController
         }
       /** @var   LowestPriceEnquiry $lowestPriceEnquiry */
         $lowestPriceEnquiry=$serializer->deserialize($request->getContent(),LowestPriceEnquiry::class,'json');
-      $lowestPriceEnquiry->setDiscountedPrice(50);
-        $lowestPriceEnquiry->setPrice(100);
-        $lowestPriceEnquiry->setPromotionId(3);
-        $lowestPriceEnquiry->setPromotionName('Black Friday half price sale');
+
 
         return new Response($serializer->serialize($lowestPriceEnquiry,'json'),200);
 
