@@ -45,4 +45,10 @@ class ProductRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findValidForProduct(Product $product,\DateTimeInterface $requestDate){
+
+
+
+}
 }
