@@ -46,10 +46,5 @@ class ProductRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-public function findValidForProduct(Product $product,\DateTimeInterface $requestDate){
 
-return $this->createQueryBuilder('b');
-
-
-}
 }

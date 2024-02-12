@@ -40,11 +40,11 @@ class ProductsController extends AbstractController
         $lowestPriceEnquiry=$serializer->deserialize($request->getContent(),LowestPriceEnquiry::class,'json');
 $product=$this->repository->find($id);//Add error handling for not found product
       $lowestPriceEnquiry->setProduct($product);
-
+       // dd($this->entityManager->getRepository(Promotion::class)->find(1));
       $promotion= $this->entityManager->getRepository(Promotion::class)->findValidForProduct(
           $product, date_create_immutable($lowestPriceEnquiry->getRequestDate())
       );
-
+dd($promotion);
 
 
 
