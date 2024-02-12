@@ -8,7 +8,7 @@ class LowestPriceEnquiry implements PromotionEnquireInterface
 {
     private Product $product;
     private ?int $quantity;
-    private ?int $price;
+    private ?int $promotionId;
     private ?int $discountedPrice;
     private ?string $requestLocation;
     private ?string $voucherCode;
