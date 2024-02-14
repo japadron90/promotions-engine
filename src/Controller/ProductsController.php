@@ -44,11 +44,9 @@ $product=$this->repository->find($id);//Add error handling for not found product
       $promotion= $this->entityManager->getRepository(Promotion::class)->findValidForProduct(
           $product, date_create_immutable($lowestPriceEnquiry->getRequestDate())
       );
-dd($promotion);
 
 
-
-$modify=$promotionFilter->apply($lowestPriceEnquiry);
+$modify=$promotionFilter->apply($lowestPriceEnquiry,$promotion);
 $responseContent=$serializer->serialize($modify,'json');
         return new Response($responseContent,200);
 
