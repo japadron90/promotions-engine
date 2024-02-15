@@ -49,7 +49,7 @@ $product=$this->repository->find($id);//Add error handling for not found product
 $modify=$promotionFilter->apply($lowestPriceEnquiry,...$promotion);
 
 $responseContent=$serializer->serialize($modify,'json');
-        return new Response($responseContent,200);
+        return new Response($responseContent,200,['Content-Type'=>'application/json']);
 
 
     }

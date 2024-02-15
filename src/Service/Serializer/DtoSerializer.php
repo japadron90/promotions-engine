@@ -3,7 +3,11 @@
 namespace App\Service\Serializer;
 
 
+
+use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -15,9 +19,13 @@ private SerializerInterface $serializer ;
 
     public function __construct()
     {
-        $encoders = [ new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer(nameConverter: new CamelCaseToSnakeCaseNameConverter())];
-        $this->serializer=new Serializer($normalizers,$encoders);
+$this->serializer=new Serializer([new ObjectNormalizer(
+  classMetadataFactory: new ClassMetadataFactory(new AttributeLoader()),///este Atribute Loader sustituye new AnnotationLoader(new AnnotationReader())
+  nameConverter: new CamelCaseToSnakeCaseNameConverter()
+  )
+
+        ],[new JsonEncoder()]);
+
     }
 
 
