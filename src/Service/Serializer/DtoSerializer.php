@@ -3,7 +3,6 @@
 namespace App\Service\Serializer;
 
 
-
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
@@ -15,27 +14,26 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class DtoSerializer implements SerializerInterface
 {
-private SerializerInterface $serializer ;
+    private SerializerInterface $serializer;
 
     public function __construct()
     {
-$this->serializer=new Serializer([new ObjectNormalizer(
-  classMetadataFactory: new ClassMetadataFactory(new AttributeLoader()),///este Atribute Loader sustituye new AnnotationLoader(new AnnotationReader())
-  nameConverter: new CamelCaseToSnakeCaseNameConverter()
-  )
-
-        ],[new JsonEncoder()]);
+        $this->serializer = new Serializer([new ObjectNormalizer(
+            classMetadataFactory: new ClassMetadataFactory(new AttributeLoader()),///este Atribute Loader sustituye new AnnotationLoader(new AnnotationReader())
+            nameConverter: new CamelCaseToSnakeCaseNameConverter()
+        )
+        ], [new JsonEncoder()]);
 
     }
 
 
     public function serialize(mixed $data, string $format, array $context = []): string
     {
-        return $this->serializer->serialize($data,$format,$context);
+        return $this->serializer->serialize($data, $format, $context);
     }
 
     public function deserialize(mixed $data, string $type, string $format, array $context = []): mixed
     {
-        return $this->serializer->deserialize($data,$type,$format,$context);
+        return $this->serializer->deserialize($data, $type, $format, $context);
     }
 }
