@@ -20,7 +20,7 @@ $lowestPrice=$price*$quantity;
 
 //$modifiedPrice=$priceModified->modify($price,$quantity,$promotion,$enquiry);
 
-        $enquiry->setDiscountedPrice(50);
+        $enquiry->setDiscountedPrice(250);
         $enquiry->setPrice(100);
         $enquiry->setPromotionId(3);
         $enquiry->setPromotionName('Black Friday half price sale');
