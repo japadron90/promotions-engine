@@ -13,6 +13,13 @@ class LowestPriceFilter implements PromotionFilterInterface
 
     public function apply(PromotionEnquireInterface $enquiry,Promotion ...$promotion): PromotionEnquireInterface
     {
+$price=$enquiry->getProduct()->getPrice();
+$quantity=$enquiry->getQuantity();
+$lowestPrice=$price*$quantity;
+
+
+//$modifiedPrice=$priceModified->modify($price,$quantity,$promotion,$enquiry);
+
         $enquiry->setDiscountedPrice(50);
         $enquiry->setPrice(100);
         $enquiry->setPromotionId(3);
