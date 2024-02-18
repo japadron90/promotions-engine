@@ -37,7 +37,7 @@ public function promotionsDataProvider():array{
     $promotionsOne->setName('Black Friday half price sale');
     $promotionsOne->setAdjustment(0.5);
     $promotionsOne->setCriteria(["from"=>"2022-11-25","to"=>"2022-11-28"]);
-    $promotionsOne->setType('date_range_multiplaier');
+    $promotionsOne->setType('date_range_multiplier');
 
     $promotionsTwo= new Promotion();
     $promotionsTwo->setName('Voucher OU812');

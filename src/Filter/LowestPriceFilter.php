@@ -5,6 +5,7 @@ namespace App\Filter;
 
 use App\DTO\PromotionEnquireInterface;
 use App\Entity\Promotion;
+use App\Filter\Modifier\Factory\PriceModifierFactoryInterface;
 
 class LowestPriceFilter implements PromotionFilterInterface
 {
@@ -20,7 +21,7 @@ class LowestPriceFilter implements PromotionFilterInterface
         $quantity = $enquiry->getQuantity();
         $lowestPrice = $price * $quantity;
         foreach ($promotions as $promotion) {
-            $priceModified = $this->priceModifierFactory()->create($promotion->getType());
+            $priceModified = $this->priceModifierFactory->create($promotion->getType());
 
 
 
