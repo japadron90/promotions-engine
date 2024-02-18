@@ -5,6 +5,7 @@ namespace App\Tests\unit;
 use App\DTO\LowestPriceEnquiry;
 use App\Entity\Promotion;
 use App\Filter\Modifier\DateRangeMultiplier;
+use App\Filter\Modifier\FixedPriceVoucher;
 use App\Tests\ServiceTestCase;
 
 class PriceModifiersTest extends ServiceTestCase
@@ -30,5 +31,11 @@ $enquiry->setRequestDate('2022-11-27');
 
     //then
     $this->assertEquals(250,$modifiedPrice);
+}
+    /**  @test */
+public function FixedPriceVoucher_returns_acorrectly_modified_price():void{
+    $fixedPriceVoucher= new FixedPriceVoucher();
+
+
 }
 }
