@@ -10,6 +10,9 @@ class FixedPriceVoucher implements PriceModifierInterface
 
     public function modify(int $price, int $quantity, Promotion $promotion, PromotionEnquireInterface $enquiry): int
     {
-       return 250;
+       if(!($enquiry->getVoucherCode()===$promotion->getCriteria()['code'])){
+           return $price*$quantity;
+       }
+       return $quantity*$promotion->getAdjustment();
     }
 }
