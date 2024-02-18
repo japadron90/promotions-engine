@@ -49,7 +49,7 @@ public function promotionsDataProvider():array{
     $promotionsThree->setName('Buy one get one free');
     $promotionsThree->setAdjustment(0.5);
     $promotionsThree->setCriteria(["minimum_quantity"=>2]);
-    $promotionsThree->setType('date_range_multiplaier');
+    $promotionsThree->setType('even_items_multiplier');
 
    return [$promotionsOne,$promotionsTwo,$promotionsThree];
 }
