@@ -32,7 +32,6 @@ class LowestPriceFilter implements PriceFilterInterface
        if($modifiedPrice<$lowestPrice){
 
             $enquiry->setDiscountedPrice($modifiedPrice);
-
             $enquiry->setPromotionId($promotion->getId());
             $enquiry->setPromotionName($promotion->getName());
             $lowestPrice=$modifiedPrice;
