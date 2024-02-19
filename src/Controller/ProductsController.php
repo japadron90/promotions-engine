@@ -25,7 +25,7 @@ class ProductsController extends AbstractController
 
 
 {
-    public function __construct(private ProductRepository $repository,private EntityManagerInterface $entityManager)
+    public function __construct(private ProductRepository $repository,)
     {
 
     }
@@ -42,7 +42,7 @@ class ProductsController extends AbstractController
 $product=$this->repository->find($id);//Add error handling for not found product
       $lowestPriceEnquiry->setProduct($product);
 
-     $promotion= $promotionCache->findValidForProduct($product,$lowestPriceEnquiry->getRequestDate());
+     $promotion= $promotionCache->findValidForProduct($product,$lowestPriceEnquiry->getRequestDate());//la idea aki es guardar en cache
 
        // dd($this->entityManager->getRepository(Promotion::class)->find(1));
     /*  $promotion= $this->entityManager->getRepository(Promotion::class)->findValidForProduct(
