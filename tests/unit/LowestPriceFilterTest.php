@@ -21,6 +21,8 @@ $product->setPrice(100);
     $enquiry= new LowestPriceEnquiry();
     $enquiry->setProduct($product);
     $enquiry->setQuantity(5);
+    $enquiry->setRequestDate('2022-11-27');
+    $enquiry->setVoucherCode('OU812');
 
     $promotions=$this->promotionsDataProvider();
 $lowestPriceFilter=$this->container->get(LowestPriceFilter::class);
