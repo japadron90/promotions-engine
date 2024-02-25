@@ -3,8 +3,10 @@
 namespace App\EventSubscriber;
 
 
+use App\DTO\LowestPriceEnquiry;
 use App\Event\AfterDtoCreatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -30,5 +32,14 @@ class DtoSubscriber implements EventSubscriberInterface
             throw new ValidationFailedException('Validation failed', $errors);
         }
 
+    }
+    public function validateJuly(LowestPriceEnquiry $valor,ValidatorInterface $validator){
+$error=$validator->validate($valor);
+
+if(count($error)>0){
+    return new JsonResponse(throw new ValidationFailedException('Validation Julio failed',$error));
+  //  throw new ValidationFailedException('Validation Julio failed',$error);
+ //   dd(1);
+}
     }
 }

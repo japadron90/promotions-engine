@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\cache\PromotionCache;
 use App\DTO\LowestPriceEnquiry;
 use App\Entity\Promotion;
+use App\EventSubscriber\DtoSubscriber;
 use App\Filter\PromotionFilterInterface;
 use App\Repository\ProductRepository;
 use App\Service\Serializer\DtoSerializer;
@@ -20,6 +21,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Context\Normalizer\DateTimeNormalizerContextBuilder;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ProductsController extends AbstractController
 
@@ -31,16 +33,21 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/products/{id}/lowest-price', name: 'lowest-price',methods: 'POST')]
-    public function lowestPrice(int $id,Request $request,DtoSerializer $serializer,PromotionFilterInterface $promotionFilter,PromotionCache $promotionCache): Response{
+    public function lowestPrice(int $id,Request $request,DtoSerializer $serializer,DtoSubscriber $subscriber,PromotionFilterInterface $promotionFilter,PromotionCache $promotionCache,ValidatorInterface $validator): Response{
 
         if($request->headers->has('force_fail')){
             return new JsonResponse(['error'=>'promotions Engine failure message'],$request->headers->get('force_fail'));
 
         }
       /** @var   LowestPriceEnquiry $lowestPriceEnquiry */
+
+
         $lowestPriceEnquiry=$serializer->deserialize($request->getContent(),LowestPriceEnquiry::class,'json');
-$product=$this->repository->find($id);//Add error handling for not found product
+        $subscriber->validateJuly($lowestPriceEnquiry,$validator);
+
+        $product=$this->repository->find($id);//Add error handling for not found product
       $lowestPriceEnquiry->setProduct($product);
+
 
      $promotion= $promotionCache->findValidForProduct($product,$lowestPriceEnquiry->getRequestDate());//la idea aki es guardar en cache
 
@@ -51,6 +58,8 @@ $product=$this->repository->find($id);//Add error handling for not found product
 
 
 $modify=$promotionFilter->apply($lowestPriceEnquiry,...$promotion);
+
+
 
 $responseContent=$serializer->serialize($modify,'json');
         return new Response($responseContent,200,['Content-Type'=>'application/json']);

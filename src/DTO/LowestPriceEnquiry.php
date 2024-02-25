@@ -5,21 +5,26 @@ namespace App\DTO;
 use App\Entity\Product;
 use Symfony\Component\Serializer\Attribute\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+
 class LowestPriceEnquiry implements PriceEnquiryInterface
 {
+   // #[Assert\NotBlank]
+ //   #[Assert\Positive(message: 'La cantidad debe ser positiva')]
+    private int $quantity;
     #[Ignore]
     private Product $product;
-    #[Assert\NotBlank]
-    #[Assert\Positive]
-    private ?int $quantity;
+
     private ?int $promotionId;
-    #[Assert\Positive]
+  //  #[Assert\Positive]
     private ?int $price;
     private ?int $discountedPrice;
     private ?string $requestLocation;
     private ?string $voucherCode;
     private ?string $requestDate;
     private ?string $promotionName;
+
+
 
     /**
      * @return int|null
@@ -138,7 +143,8 @@ class LowestPriceEnquiry implements PriceEnquiryInterface
     /**
      * @return string|null
      */
-    public function getRequestDate(): ?string
+    public function
+    getRequestDate(): ?string
     {
         return $this->requestDate;
     }
@@ -165,6 +171,12 @@ class LowestPriceEnquiry implements PriceEnquiryInterface
     public function setPromotionName(?string $promotionName): void
     {
         $this->promotionName = $promotionName;
+   }
+   public static function loadValidatorMetadata(ClassMetadata $metadata):void{
+        $metadata->addPropertyConstraint('quantity',new Assert\Positive());
+       $metadata->addPropertyConstraint('quantity',new Assert\NotBlank());
+       $metadata->addPropertyConstraint('price',new Assert\Positive());
+
    }
 //
 //    public function jsonSerialize(): mixed
