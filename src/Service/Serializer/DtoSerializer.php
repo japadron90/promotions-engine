@@ -3,6 +3,7 @@
 namespace App\Service\Serializer;
 
 
+use App\EventSubscriber\DtoSubscriber;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
@@ -35,6 +36,7 @@ class DtoSerializer implements SerializerInterface
     public function deserialize(mixed $data, string $type, string $format, array $context = []): mixed
     {
        $dto=$this->serializer->deserialize($data, $type, $format, $context);
+
 
 
 

@@ -172,7 +172,7 @@ class LowestPriceEnquiry implements PriceEnquiryInterface
     {
         $this->promotionName = $promotionName;
    }
-   public static function loadValidatorMetadata(ClassMetadata $metadata):void{
+  public static function loadValidatorMetadata(ClassMetadata $metadata):void{
         $metadata->addPropertyConstraint('quantity',new Assert\Positive());
        $metadata->addPropertyConstraint('quantity',new Assert\NotBlank());
        $metadata->addPropertyConstraint('price',new Assert\Positive());
