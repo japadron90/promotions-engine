@@ -35,17 +35,14 @@ class ProductsController extends AbstractController
     #[Route('/products/{id}/lowest-price', name: 'lowest-price',methods: 'POST')]
     public function lowestPrice(int $id,Request $request,DtoSerializer $serializer,DtoSubscriber $subscriber,PromotionFilterInterface $promotionFilter,PromotionCache $promotionCache,ValidatorInterface $validator): Response{
 
-        if($request->headers->has('force_fail')){
-            return new JsonResponse(['error'=>'promotions Engine failure message'],$request->headers->get('force_fail'));
 
-        }
       /** @var   LowestPriceEnquiry $lowestPriceEnquiry */
 
 
         $lowestPriceEnquiry=$serializer->deserialize($request->getContent(),LowestPriceEnquiry::class,'json');
         $subscriber->validateJuly($lowestPriceEnquiry,$validator);
 
-        $product=$this->repository->find($id);//Add error handling for not found product
+        $product=$this->repository->findOrFail($id);//Add error handling for not found product
       $lowestPriceEnquiry->setProduct($product);
 
 
