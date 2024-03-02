@@ -7,6 +7,7 @@ use App\DTO\LowestPriceEnquiry;
 use App\Event\AfterDtoCreatedEvent;
 use App\Service\ServiceException;
 use App\Service\ServiceExceptionData;
+use App\Service\ValidationExceptionData;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
@@ -39,10 +40,10 @@ class DtoSubscriber implements EventSubscriberInterface
 
     }
     public function validateJuly(LowestPriceEnquiry $valor,ValidatorInterface $validator){
-$error=$validator->validate($valor);
+$errors=$validator->validate($valor);
 
-if(count($error)>0){
-    $validationExceptionData= new ServiceExceptionData(422,'ConstraintViolationList');
+if(count($errors)>0){
+    $validationExceptionData= new ValidationExceptionData(422,'ConstraintViolationList',$errors);
 
     return new JsonResponse(throw new ServiceException($validationExceptionData));
   //  throw new ValidationFailedException('Validation Julio failed',$error);

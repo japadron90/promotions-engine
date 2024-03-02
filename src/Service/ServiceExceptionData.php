@@ -5,7 +5,7 @@ namespace App\Service;
 class ServiceExceptionData
 {
 
-    public function __construct(protected int $statusCode,protected string $type)
+    public function __construct(protected int $statusCode, protected string $type)
     {
 
     }
@@ -32,14 +32,12 @@ class ServiceExceptionData
     public function toArray(): array
     {
         return [
-            'type' => 'ConstraintViolationList',
-            'title' => 'An error occurred',
-            'description' => 'This Value should be positive',
-            'violations' => [
+            'type' =>$this->type,
+          /*  'violations' => [
                 ['propertyPath' => 'quantity',
                     'message' => 'This Value should be positive'
                 ]
-            ]
+            ]*/
         ];
     }
 }
