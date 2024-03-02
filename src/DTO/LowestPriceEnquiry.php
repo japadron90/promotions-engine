@@ -176,6 +176,8 @@ class LowestPriceEnquiry implements PriceEnquiryInterface
         $metadata->addPropertyConstraint('quantity',new Assert\Positive());
        $metadata->addPropertyConstraint('quantity',new Assert\NotBlank());
        $metadata->addPropertyConstraint('price',new Assert\Positive());
+      $metadata->addPropertyConstraint('requestDate',new Assert\NotBlank());
+      $metadata->addPropertyConstraint('requestDate',new Assert\Date());
 
    }
 //
