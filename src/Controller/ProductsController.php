@@ -32,34 +32,28 @@ class ProductsController extends AbstractController
 
     }
 
-    #[Route('/products/{id}/lowest-price', name: 'lowest-price',methods: 'POST')]
-    public function lowestPrice(int $id,Request $request,DtoSerializer $serializer,DtoSubscriber $subscriber,PromotionFilterInterface $promotionFilter,PromotionCache $promotionCache,ValidatorInterface $validator): Response{
+    #[Route('/products/{id}/lowest-price', name: 'lowest-price', methods: 'POST')]
+    public function lowestPrice(int $id, Request $request, DtoSerializer $serializer, DtoSubscriber $subscriber, PromotionFilterInterface $promotionFilter, PromotionCache $promotionCache, ValidatorInterface $validator): Response
+    {
 
 
-      /** @var   LowestPriceEnquiry $lowestPriceEnquiry */
+        /** @var   LowestPriceEnquiry $lowestPriceEnquiry */
 
 
-        $lowestPriceEnquiry=$serializer->deserialize($request->getContent(),LowestPriceEnquiry::class,'json');
-        $subscriber->validateJuly($lowestPriceEnquiry,$validator);
+        $lowestPriceEnquiry = $serializer->deserialize($request->getContent(), LowestPriceEnquiry::class, 'json');
+        $subscriber->validateJuly($lowestPriceEnquiry, $validator);
 
-        $product=$this->repository->findOrFail($id);//Add error handling for not found product
-      $lowestPriceEnquiry->setProduct($product);
+        $product = $this->repository->findOrFail($id);//Add error handling for not found product
+        $lowestPriceEnquiry->setProduct($product);
 
+        $promotion = $promotionCache->findValidForProduct($product, $lowestPriceEnquiry->getRequestDate());//la idea aki es guardar en cache
 
-     $promotion= $promotionCache->findValidForProduct($product,$lowestPriceEnquiry->getRequestDate());//la idea aki es guardar en cache
+        $modify = $promotionFilter->apply($lowestPriceEnquiry, ...$promotion);
 
-       // dd($this->entityManager->getRepository(Promotion::class)->find(1));
-    /*  $promotion= $this->entityManager->getRepository(Promotion::class)->findValidForProduct(
-          $product, date_create_immutable($lowestPriceEnquiry->getRequestDate())
-      );*/
+        $responseContent = $serializer->serialize($modify, 'json');
 
-
-$modify=$promotionFilter->apply($lowestPriceEnquiry,...$promotion);
-
-
-
-$responseContent=$serializer->serialize($modify,'json');
-        return new Response($responseContent,200,['Content-Type'=>'application/json']);
+        return new JsonResponse(data: $responseContent,status: Response::HTTP_OK,json: true);
+       // return new Response($responseContent, 200, ['Content-Type' => 'application/json']);
 
 
     }
@@ -73,12 +67,12 @@ $responseContent=$serializer->serialize($modify,'json');
             'path' => 'src/Controller/ProductsController.php',
         ]);
     }
-    #[Route('/products/{id}/promotions', name: 'promotions',methods: 'GET')]
+
+    #[Route('/products/{id}/promotions', name: 'promotions', methods: 'GET')]
     public function promotions()
     {
 
     }
-
 
 
 }
